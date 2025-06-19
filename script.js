@@ -1,6 +1,9 @@
- document.getElementById('mobile-menu-btn').onclick = function() {
-  document.getElementById('navbar-links').classList.toggle('active');
-};
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const navbarLinks = document.getElementById('navbar-links');
+
+mobileMenuBtn.addEventListener('click', () => {
+  navbarLinks.classList.toggle('active');
+});
 
  
  // Loader with progress bar and countdown

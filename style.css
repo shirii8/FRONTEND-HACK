@@ -246,3 +246,40 @@ img, svg { max-width: 100%; height: auto; }
 @media (min-width: 769px) {
   .mobile-menu-btn { display: none; }
 }
+
+.navbar-icons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 130px; /* Adjust width to fit your icons comfortably */
+}
+
+/* Optional: spacing between icons */
+.navbar-icons-container > * {
+  flex-shrink: 0;
+}
+
+/* Mobile menu button hidden on desktop */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* Show hamburger on mobile */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  /* Hide nav links initially on mobile */
+  .navbar-links {
+    display: none;
+  }
+  .navbar-links.active {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
