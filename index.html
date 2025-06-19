@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Apple Liquid Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="apple-logo">
+        <svg width="80" height="80" viewBox="0 0 100 100" fill="#ffffff">
+          <path d="M81.1,65.6c-1.4,3.4-2.1,4.9-4,8.2c-2.6,4.5-6.3,10-10.9,10.1c-4.2,0.1-5.3-2.7-10.9-2.7c-5.6,0-6.9,2.6-11.3,2.8
+          c-4.8,0.2-8.5-4.9-11.1-9.3c-5.9-10.2-6.5-22.3-2.9-28.8c2.7-4.8,7-7.7,12.1-7.8c4.6-0.1,8.8,3.1,11.1,3.1c2.2,0,6.9-3.8,11.7-3.2
+          c2,0.1,7.7,0.8,11.3,6c-0.3,0.2-6.8,4-6.7,12.1C77.6,61.1,78.3,62.9,81.1,65.6z M66.6,22.3c2.1-2.6,3.5-6.2,3-9.8
+          c-3.2,0.1-7.1,2.1-9.4,4.8c-2,2.3-3.6,5.9-3.1,9.4C60.2,26.9,64.5,24.8,66.6,22.3z"/>
+        </svg>
+      </div>
+      <div class="loader-progress">
+        <div class="loader-progress-bar" id="loader-progress-bar"></div>
+      </div>
+      <div id="loader-countdown"></div>
+    </div>
+  </div>
+  <!-- Splash Background -->
+  <canvas id="splash-canvas"></canvas>
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a class="apple-logo-nav" href="#">
+      <svg width="36" height="36" viewBox="0 0 100 100" fill="#00f2ff">
+        <path d="M81.1,65.6c-1.4,3.4-2.1,4.9-4,8.2c-2.6,4.5-6.3,10-10.9,10.1c-4.2,0.1-5.3-2.7-10.9-2.7c-5.6,0-6.9,2.6-11.3,2.8
+        c-4.8,0.2-8.5-4.9-11.1-9.3c-5.9-10.2-6.5-22.3-2.9-28.8c2.7-4.8,7-7.7,12.1-7.8c4.6-0.1,8.8,3.1,11.1,3.1c2.2,0,6.9-3.8,11.7-3.2
+        c2,0.1,7.7,0.8,11.3,6c-0.3,0.2-6.8,4-6.7,12.1C77.6,61.1,78.3,62.9,81.1,65.6z M66.6,22.3c2.1-2.6,3.5-6.2,3-9.8
+        c-3.2,0.1-7.1,2.1-9.4,4.8c-2,2.3-3.6,5.9-3.1,9.4C60.2,26.9,64.5,24.8,66.6,22.3z"/>
+      </svg>
+    </a>
+    <ul class="navbar-links" id="navbar-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#showcase">Showcase</a></li>
+    </ul>
+    <button id="theme-toggle" class="theme-btn">
+      <span id="theme-icon">🌙</span>
+    </button>
+  </nav>
+  <!-- Hero Carousel -->
+  <section id="hero" class="section">
+    <div class="max-w-6xl mx-auto liquid-glass p-8">
+      <h1 class="text-4xl md:text-6xl font-bold text-center mb-8 floating bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+        Liquid Glass Experience
+      </h1>
+      <div class="carousel-container">
+        <button class="carousel-btn left" aria-label="Previous">&#8592;</button>
+        <div class="carousel-track" id="hero-carousel">
+          <div class="carousel-slide">
+            <h2 class="text-3xl font-bold mb-4">Super Retina Display</h2>
+            <p class="text-xl text-center max-w-2xl">Brighter, smarter, and more beautiful than ever with our advanced display technology</p>
+          </div>
+          <div class="carousel-slide">
+            <h2 class="text-3xl font-bold mb-4">Dynamic Island 2.0</h2>
+            <p class="text-xl text-center max-w-2xl">Intelligent activity hub that adapts to your workflow in real-time</p>
+          </div>
+          <div class="carousel-slide">
+            <h2 class="text-3xl font-bold mb-4">Spatial Audio+</h2>
+            <p class="text-xl text-center max-w-2xl">Immersive sound that moves with you for a theater-like experience</p>
+          </div>
+        </div>
+        <button class="carousel-btn right" aria-label="Next">&#8594;</button>
+        <div class="carousel-nav" id="hero-nav"></div>
+      </div>
+    </div>
+  </section>
+  <!-- Fun Features Section -->
+  <section id="features" class="section">
+    <h2 class="text-3xl font-bold text-center mb-12">Fun Features</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card liquid-glass p-6">
+        <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-6 mx-auto">
+          <svg class="w-8 h-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4 text-center">Reflective Elements</h3>
+        <p class="text-center">UI components that dynamically mirror their environment creating depth and context</p>
+      </div>
+      <div class="card liquid-glass p-6">
+        <div class="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mb-6 mx-auto">
+          <svg class="w-8 h-8 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4 text-center">Adaptive Transparency</h3>
+        <p class="text-center">Smart opacity adjustments that prioritize content while maintaining context</p>
+      </div>
+      <div class="card liquid-glass p-6">
+        <div class="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mb-6 mx-auto">
+          <svg class="w-8 h-8 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-4 text-center">Liquid Motion</h3>
+        <p class="text-center">Fluid animations with viscosity-based physics for natural-feeling interactions</p>
+      </div>
+    </div>
+  </section>
+  <!-- Statistics Dashboard -->
+  <section id="dashboard" class="section">
+    <h2 class="text-3xl font-bold text-center mb-12">Performance Dashboard</h2>
+    <div class="max-w-6xl mx-auto stats-grid">
+      <div class="stat-card liquid-glass">
+        <h3 class="text-xl font-bold mb-4">User Engagement</h3>
+        <canvas id="engagement-chart" height="200"></canvas>
+      </div>
+      <div class="stat-card liquid-glass">
+        <h3 class="text-xl font-bold mb-4">Feature Adoption</h3>
+        <canvas id="adoption-chart" height="200"></canvas>
+      </div>
+      <div class="stat-card liquid-glass">
+        <h3 class="text-xl font-bold mb-4">Performance Metrics</h3>
+        <div class="space-y-4 mt-4">
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Battery Efficiency</span>
+              <span id="battery-value">87%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill bg-blue-600" id="battery-bar"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Memory Optimization</span>
+              <span id="memory-value">92%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill bg-purple-600" id="memory-bar"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Processing Speed</span>
+              <span id="speed-value">94%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill bg-cyan-600" id="speed-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Testimonials -->
+  <section id="testimonials" class="section">
+    <h2 class="text-3xl font-bold text-center mb-12">User Experiences</h2>
+    <div class="max-w-4xl mx-auto liquid-glass p-8">
+      <div class="carousel-container">
+        <button class="carousel-btn left" aria-label="Previous">&#8592;</button>
+        <div class="carousel-track" id="testimonials-carousel">
+          <div class="carousel-slide">
+            <div class="testimonial p-6">
+              <p class="text-xl italic mb-4">"The new interface feels like interacting with actual liquid. The way elements flow and respond is magical."</p>
+              <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 mr-4"></div>
+                <div>
+                  <p class="font-bold">Sarah K.</p>
+                  <p class="text-gray-600 dark:text-gray-400">Design Director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="testimonial p-6">
+              <p class="text-xl italic mb-4">"Performance improvements are incredible. My device feels years newer with these optimizations."</p>
+              <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 mr-4"></div>
+                <div>
+                  <p class="font-bold">Michael T.</p>
+                  <p class="text-gray-600 dark:text-gray-400">Software Engineer</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="testimonial p-6">
+              <p class="text-xl italic mb-4">"Battery life has improved dramatically. I can now go through a full day of heavy usage with ease."</p>
+              <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 mr-4"></div>
+                <div>
+                  <p class="font-bold">David R.</p>
+                  <p class="text-gray-600 dark:text-gray-400">Product Manager</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn right" aria-label="Next">&#8594;</button>
+        <div class="carousel-nav" id="testimonials-nav"></div>
+      </div>
+    </div>
+  </section>
+  <!-- Features Showcase (Neon Glassmorphism Carousel) -->
+  <section id="showcase" class="section">
+    <h2 class="text-3xl font-bold text-center mb-12">Work Features & Services</h2>
+    <div class="carousel-container">
+      <button class="carousel-btn left" aria-label="Previous">&#8592;</button>
+      <div class="carousel-track" id="showcase-carousel">
+        <div class="carousel-slide">
+          <div class="carousel-card-neon card p-6">
+            <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-6 mx-auto">
+              <div style="font-size: 2rem;">🧠</div>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">Apple Intelligence</h3>
+            <p class="text-center">Image Playground, Genmoji, Writing Tools, and ChatGPT built-in</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-card-neon card p-6">
+            <div class="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mb-6 mx-auto">
+              <div style="font-size: 2rem;">🔒</div>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">Privacy First</h3>
+            <p class="text-center">All features designed with user privacy at the core</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-card-neon card p-6">
+            <div class="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mb-6 mx-auto">
+              <div style="font-size: 2rem;">🎨</div>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">Liquid Glass UI</h3>
+            <p class="text-center">Major UI overhaul with beautiful glassmorphism</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-card-neon card p-6">
+            <div class="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-6 mx-auto">
+              <div style="font-size: 2rem;">⚡</div>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-center">Performance Boost</h3>
+            <p class="text-center">Faster, smoother, and more efficient than ever</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-btn right" aria-label="Next">&#8594;</button>
+      <div class="carousel-nav" id="showcase-nav"></div>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
