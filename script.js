@@ -1,3 +1,8 @@
+ document.getElementById('mobile-menu-btn').onclick = function() {
+  document.getElementById('navbar-links').classList.toggle('active');
+};
+
+ 
  // Loader with progress bar and countdown
     window.addEventListener("load", () => {
       const loader = document.getElementById("loader");
@@ -184,7 +189,7 @@
 
     // Splash effect
 
-    document.addEventListener("DOMContentLoaded", () => {
+   document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("splash-canvas");
   const ctx = canvas.getContext("2d");
   let ripples = [];
@@ -200,44 +205,59 @@
   }
   window.addEventListener("resize", resize);
 
+  // Responsive max ripple size based on screen
+  function getMaxRipple() {
+    return Math.max(80, Math.min(W, H) * 0.35);
+  }
+
   // Add a ripple at a position
   function addRipple(x, y, color = "#00f2ff") {
     ripples.push({
       x, y,
       r: 0,
-      max: 180 + Math.random()*60,
-      alpha: 0.35 + Math.random()*0.15,
+      max: getMaxRipple() + Math.random() * 0.15 * getMaxRipple(),
+      alpha: 0.32 + Math.random() * 0.14,
       color,
       life: 0,
-      speed: 2.2 + Math.random()*0.7
+      speed: 1.1 + Math.random() * 0.5 + (Math.min(W, H) < 500 ? 0.6 : 0) // slower on mobile
     });
   }
 
-  // Initial splash ripples (center and random spots)
-  for(let i=0;i<7;i++) {
+  // Initial splash ripples (center and random spots, scaled for screen)
+  for (let i = 0; i < (Math.min(W, H) < 500 ? 3 : 7); i++) {
     setTimeout(() => {
       addRipple(
-        W/2 + Math.cos(i/7*2*Math.PI)*W/6 + Math.random()*40-20,
-        H/2 + Math.sin(i/7*2*Math.PI)*H/6 + Math.random()*40-20
+        W / 2 + Math.cos(i / 7 * 2 * Math.PI) * W / (Math.min(W, H) < 500 ? 7 : 6) + Math.random() * 20 - 10,
+        H / 2 + Math.sin(i / 7 * 2 * Math.PI) * H / (Math.min(W, H) < 500 ? 7 : 6) + Math.random() * 20 - 10
       );
-    }, i*90);
+    }, i * 90);
   }
 
-  // On mousemove, add ripple at cursor
-  window.addEventListener("mousemove", e => {
-    addRipple(e.clientX, e.clientY, "#8b5cf6");
-  });
+  // On mousemove/touch, add ripple at pointer
+  function pointerRipple(e) {
+    let x, y;
+    if (e.touches && e.touches.length) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    } else {
+      x = e.clientX;
+      y = e.clientY;
+    }
+    addRipple(x, y, "#8b5cf6");
+  }
+  window.addEventListener("mousemove", pointerRipple);
+  window.addEventListener("touchstart", pointerRipple);
 
   function animate() {
-    ctx.clearRect(0,0,W,H);
+    ctx.clearRect(0, 0, W, H);
     ripples.forEach((ripple, idx) => {
       ctx.save();
       ctx.beginPath();
-      ctx.arc(ripple.x, ripple.y, ripple.r, 0, 2*Math.PI);
+      ctx.arc(ripple.x, ripple.y, ripple.r, 0, 2 * Math.PI);
       ctx.strokeStyle = `rgba(0,242,255,${ripple.alpha})`;
-      ctx.lineWidth = 2.5 + 2*Math.sin(ripple.life/7);
+      ctx.lineWidth = 2.5 + 2 * Math.sin(ripple.life / 7);
       ctx.shadowColor = ripple.color;
-      ctx.shadowBlur = 24;
+      ctx.shadowBlur = Math.min(W, H) < 500 ? 10 : 24;
       ctx.globalAlpha = ripple.alpha;
       ctx.stroke();
       ctx.restore();
@@ -251,6 +271,7 @@
   }
   animate();
 });
+
 
     document.addEventListener('DOMContentLoaded', () => {
       const canvas = document.getElementById('splash-canvas');
